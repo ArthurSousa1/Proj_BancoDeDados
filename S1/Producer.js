@@ -7,8 +7,7 @@ const run = async () => {
   const mensagem = {
     topic: 'topic1',
     messages: [
-      { value: 'Olá Kafka!' },
-      { value: 'Mensagem 2' },
+      { value: 'Exemplo de primeira mensagem enviada!' }
     ],
   };
 

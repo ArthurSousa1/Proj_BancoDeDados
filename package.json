@@ -10,6 +10,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "kafkajs": "^2.2.4"
+    "cassandra-driver": "^4.8.0",
+    "kafkajs": "^2.2.4",
+    "mongoose": "^8.13.2",
+    "pg": "^8.15.1"
   }
 }
