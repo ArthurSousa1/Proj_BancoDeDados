@@ -1,13 +1,7 @@
 const { Client } = require('pg');
 
 // Configurações de conexão
-const client = new Client({
-  user: 'seu_usuario',
-  host: 'localhost',
-  database: 'seu_banco',
-  password: 'sua_senha',
-  port: 5432, // porta padrão do PostgreSQL
-});
+const client = new Client("postgresql://arthur-sousa:P9ClrcZsNNk0t_D2Ff38dg@projeto-banco-de-dados-14602.7tt.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full");
 
 // Conectando ao banco
 client.connect()
