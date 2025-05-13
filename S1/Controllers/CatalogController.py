@@ -1,24 +1,30 @@
-from MessageHelper import send_message
+from Mensageria.Producer import send_message
 
 class CatalogController:
 
     def add_to_catalog():
-        produto = input('\nMaravilha! Digite o nome do produto:\n')
-        valor = input('\nAgora o valor:\n')
-        quantidade = input('\nE para fechar a quantidade:\n')
+        nome = input('\nMaravilha! Digite o nome do produto:\n')
+        descricao = input('\nValor:\n')
+        categoria = input('\n Categoria:')
+        quantidade = input('\nQuantidade:\n')
 
         mensagem = {
-            'tipo': 'Catalogo',
-            'produto': produto,
-            'preco': valor,
-            'quantidade': quantidade
+            'controller': 'Catalogo',
+            'tipo': 'adicionar',
+            "nome": nome,
+            "descricao": descricao,
+            "categoria": categoria,
+            "quantidade_estoque": quantidade
         }
 
         print(mensagem)
         send_message(mensagem)
 
     def get_catalog(callback):
-        resultado = "Mensagens do kafka"
-        callback(resultado)
-
-
+        mensagem = {
+            'controller': 'Catalogo',
+            'tipo': 'buscar',
+        }
+        
+        print(mensagem)
+        send_message(mensagem)

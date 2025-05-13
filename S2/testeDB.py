@@ -1,19 +1,19 @@
-## Redis 
-# from db.mongo import adicionar_produto, buscar_produto_por_id
+## Mongo 
+from db.mongo import adicionar_produto, buscar_produto_por_id
 
-# # Adiciona um produto
-# produto_id = adicionar_produto({
-#     "nome": "Webcam Full HD",
-#     "descricao": "1080p com microfone embutido",
-#     "preco": 299.90,
-#     "categoria": "Acessórios",
-#     "quantidade_estoque": 15,
-#     "ativo": True
-# })
+# Adiciona um produto
+produto_id = adicionar_produto({
+    "nome": "Webcam Full HD",
+    "descricao": "1080p com microfone embutido",
+    "preco": 299.90,
+    "categoria": "Acessórios",
+    "quantidade_estoque": 15,
+    "ativo": True
+})
 
-# # Busca pelo ID
-# produto = buscar_produto_por_id(produto_id)
-# print("Produto encontrado:", produto)
+# Busca pelo ID
+produto = buscar_produto_por_id(produto_id)
+print("Produto encontrado:", produto)
 
 #### Redis
 # from db.redis_db import adicionar_item_ao_carrinho, consultar_carrinho

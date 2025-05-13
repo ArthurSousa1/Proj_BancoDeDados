@@ -1,6 +1,5 @@
 import asyncpg # type: ignore
-import asyncio
-import uuid
+import asyncio, uuid, json
 from datetime import datetime
 
 async def conectar():
@@ -16,7 +15,7 @@ async def criar_pedido(usuario_id, total, endereco, itens):
     await conn.execute("""
         INSERT INTO pedidos (id, usuario_id, data_pedido, total, status, endereco_entrega)
         VALUES ($1, $2, $3, $4, $5, $6)
-    """, pedido_id, usuario_id, datetime.utcnow(), total, "em processamento", endereco)
+    """, pedido_id, usuario_id, datetime.utcnow(), total, "em processamento", json.dumps(endereco))
 
     for item in itens:
         await conn.execute("""

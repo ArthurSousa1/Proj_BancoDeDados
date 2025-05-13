@@ -1,4 +1,4 @@
-from MessageHelper import send_message
+from Mensageria.Producer import send_message
 
 class OrderController:
 
