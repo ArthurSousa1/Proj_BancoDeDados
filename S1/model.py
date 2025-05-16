@@ -15,17 +15,17 @@ def gerar_filme():
 def gerar_avaliacao():
     return {
         "avaliacaoId": f"a{uuid.uuid4().hex[:6]}",
-        "usuarioId": input("\nID do usuário: "),
-        "filmeId": input("\nID do filme avaliado: "),
+        "usuario": input("\nUsuário: "),
+        "filme": input("\nFilme avaliado: "),
         "nota": int(input("\nNota (0-10): ")),
         "comentario": input("\nComentário: "),
         "data": datetime.today().strftime("%Y-%m-%d")
     }
 
-def gerar_assistencia():
+def gerar_visualizacao():
     return {
-        "usuarioId": input("\nID do usuário: "),
-        "filmeId": input("\nID do filme assistido: "),
+        "usuario": input("\nUsuário: "),
+        "filme": input("\nFilme assistido: "),
         "genero": input("\nGênero do filme: "),
         "data": datetime.today().strftime("%Y-%m-%d")
     }

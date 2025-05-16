@@ -1,6 +1,10 @@
-from Models.cockroach_model import registrar_assistencia
+from Models.cockroach_model import registrar_avaliacao, obter_avaliacoes
 
-def processar_assistencia(dados, cursor, conn):
-    registrar_assistencia(dados, cursor)
+def processar_avaliacao(dados, cursor, conn):
+    registrar_avaliacao(dados, cursor)
     conn.commit()
-    print("Assistência registrada no CockroachDB.")
+    print("Avaliação registrada no CockroachDB.")
+
+def listar_avaliacoes(cursor):
+    return obter_avaliacoes(cursor)
+    

@@ -1,12 +1,12 @@
-from kafka import KafkaConsumer
+from kafka import KafkaConsumer, KafkaProducer
 import json
 from pymongo import MongoClient # type: ignore
 import redis # type: ignore
 import psycopg2 # type: ignore
 
-from Controllers.mongo_controller import processar_filme
-from Controllers.redis_controller import processar_avaliacao
-from Controllers.cockroach_controller import processar_assistencia
+from Controllers.mongo_controller import processar_filme, listar_filmes
+from Controllers.redis_controller import processar_visualizacao, estatisticas_genero_por_dia 
+from Controllers.cockroach_controller import processar_avaliacao, listar_avaliacoes
 
 mongo_client = MongoClient("mongodb+srv://sousaarthur840:sXFWGkNwWCcpknkq@estoque.djdf0fe.mongodb.net/?retryWrites=true&w=majority&appName=Estoque&tlsAllowInvalidCertificates=true")
 mongo_db = mongo_client["catalogo"]
@@ -27,14 +27,45 @@ consumer = KafkaConsumer(
     group_id='grupo-s2'
 )
 
+producer = KafkaProducer(
+    bootstrap_servers='localhost:9091',
+    value_serializer=lambda v: json.dumps(v).encode('utf-8')
+)
+
 def processar_mensagem(mensagem):
+    if mensagem['tipo'] == 'resposta':
+        return
+    
     print('Mensagem recebida: \n', mensagem)
     tipo = mensagem['tipo']
-    dados = mensagem['dados']
 
     if tipo == 'registrar_filme':
+        dados = mensagem['dados']
         processar_filme(dados, mongo_db)
     elif tipo == 'avaliar_filme':
-        processar_avaliacao(dados, redis_db)
+        dados = mensagem['dados']
+        processar_avaliacao(dados, cockroach_cursor, cockroach_conn)
     elif tipo == 'assistir_filme':
-        processar_assistencia(dados, cockroach_cursor, cockroach_conn)
+        dados = mensagem['dados']
+        processar_visualizacao(dados, redis_db)
+    elif tipo == 'listar_filmes':
+        resultado = listar_filmes(mongo_db)
+        id_correlacao = mensagem['id_correlacao']
+        responder(id_correlacao, resultado)
+    elif tipo == 'listar_avaliacoes':
+        resultado = listar_avaliacoes(cockroach_cursor)
+        id_correlacao = mensagem['id_correlacao']
+        responder(id_correlacao, resultado)
+    elif tipo == 'estatisticas_genero':
+        resultado = estatisticas_genero_por_dia(redis_db)
+        id_correlacao = mensagem['id_correlacao']
+        responder(id_correlacao, resultado)
+
+def responder(id_correlacao, resultado):
+    mensagem_resposta = {
+        "id_correlacao": id_correlacao,
+        "tipo": "resposta",
+        "resultado": resultado
+    }
+    producer.send('projetoDB', mensagem_resposta)
+    producer.flush()
