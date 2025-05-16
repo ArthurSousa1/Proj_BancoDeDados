@@ -3,7 +3,7 @@ from datetime import datetime
 
 def salvar_mensagem_log(es_client, dados):
     es_client.index(
-        index="projetoDB",
+        index="projetodb",
         document={
             "mensagem": dados,
             "timestamp": datetime.utcnow().isoformat()

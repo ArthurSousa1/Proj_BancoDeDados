@@ -4,7 +4,11 @@ from elasticsearch import Elasticsearch # type: ignore
 
 from Controllers.elasticsearch_controller import registrar_log
 
-es_client = Elasticsearch("http://localhost:9200")
+es_client = Elasticsearch(
+    "http://localhost:9200",
+    headers={"Accept": "application/vnd.elasticsearch+json; compatible-with=8",
+             "Content-Type": "application/vnd.elasticsearch+json; compatible-with=8"}
+)
 
 consumer = KafkaConsumer(
     'projetoDB',
@@ -16,8 +20,4 @@ consumer = KafkaConsumer(
 
 def processar_mensagem(mensagem):
     print('Mensagem recebida: \n', mensagem)
-    tipo = mensagem['tipo']
-    dados = mensagem['dados']
-
-    if tipo == 'log_s3':
-        registrar_log(dados, es_client)
+    registrar_log(mensagem, es_client)
