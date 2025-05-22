@@ -1,0 +1,7 @@
+.venv
+data/
+S1/__pycache__
+S2/Models/__pycache__
+S2/Constrollers/__pycache__
+S3/__pycache__
+S3/Constrollers/__pycache__
