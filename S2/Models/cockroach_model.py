@@ -9,7 +9,7 @@ def registrar_avaliacao(dados, cursor):
     cursor.execute(
         """
         INSERT INTO avaliacoes (avaliacao_id, usuario, filme, nota, comentario, data)
-        VALUES (%s, %s, %s, %s, %s)
+        VALUES (%s, %s, %s, %s, %s, %s)
         """,
         (avaliacaoId, usuario, filme, nota, comentario, data)
     )
